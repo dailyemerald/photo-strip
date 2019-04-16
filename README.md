@@ -1,1 +1,2 @@
-# emeraldmediagroup.github.io
+# dailyemerald.github.io
+# photo-strip
