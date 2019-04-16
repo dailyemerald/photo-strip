@@ -139,13 +139,14 @@
                 </a>
             </div>
             <script>
-                    var preview = document.getElementById("preview");
-                    var headerText = document.getElementById("headerText");
-                    var footerText = document.getElementById("footerText");
-                    var bgColor = document.getElementById("bgColor").value;
-                    var fontColor = document.getElementById("bgColor").value;
 
                     function changeSettings() {
+                        var preview = document.getElementById("preview");
+                        var headerText = document.getElementById("headerText");
+                        var footerText = document.getElementById("footerText");
+                        var bgColor = document.getElementById("bgColor").value;
+                        var fontColor = document.getElementById("fontColor").value;
+
                         preview.style.backgroundColor = '#' + bgColor;
                         var headerVal = document.getElementById("headerValue").value;
                         document.getElementById("headerText").innerHTML = headerVal;
