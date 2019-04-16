@@ -111,12 +111,12 @@
                     <hr>
                     <div class="field">
                         <label for="headerValue">Header Text:</label>
-                        <input type="text" id="headerValue">
+                        <input type="text" id="headerValue" value="Header Text">
                     </div>
                     <hr>
                     <div class="field">
                         <label for="footerValue">Footer Text:</label>
-                        <input type="text" id="footerValue">
+                        <input type="text" id="footerValue" value="Footer Text">
                     </div>
                     <hr>
                     <div class="field">
@@ -153,10 +153,6 @@
                         headerText.style.color = '#' + document.getElementById("fontColor").value;
                         footerText.style.color = '#' + document.getElementById("fontColor").value;
 
-                        let stateObj = {
-                            foo: "bar",
-                        };
-
                         history.pushState(stateObj, "page 2", "bar.html");
 
                       return false;
@@ -170,7 +166,7 @@
                         return vars;
                     }
 
-                    /*$(document).ready(function () {
+                    $(document).ready(function () {
 
 
 
@@ -193,7 +189,7 @@
 
                             return vars;
 
-                        });*/
+                        });
 
 
                     /*
