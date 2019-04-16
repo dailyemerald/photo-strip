@@ -127,13 +127,13 @@
                     <div class="field">
                         <input type="submit" value="Preview" name="Submit">
                     </div>
+                </form>
 
 
 
                     <form action="https://mailthis.to/shoheietzel@gmail.com"
                         method="POST">
-                        <input type="text" name="name" placeholder="Your name">
-                        <input type="email" name="_replyto" placeholder="Your email">
+                        <input type="hidden" name="curUrl" value="">
                         <input type="submit" value="Send">
                     </form>
                     <!--
@@ -178,7 +178,6 @@
 
 
                         history.pushState(null, null, newUrl);
-                        window.open()
 
                       return false;
                     }
@@ -192,8 +191,7 @@
                     }
 
                     $(document).ready(function () {
-
-
+                            document.getElementById("curUrl").value = window.location.href;
 
                             var hd = getUrlVars()["hd"];
                             var ft = getUrlVars()["ft"];
