@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photo-Strip Maker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="jscolor.js"></script>
+    <script type="text/javascript" src="html2canvas.js"></script>
+    <style>
+        .user-form {
+            padding:20px;
+        }
+        .user-form .field {
+            padding: 4px; background: #eee;
+        }
+        .user-form .field label {
+            display:inline-block; width:45%;
+        }
+        .user-form .field input {
+            display:inline-block; width:45%;
+        }
+        .user-form hr {
+            margin: 0px 0 0px 0;
+            background-color: #FFFFFF;
+            height: 1px;
+            border: 0;
+        }
+        .user-form textarea {
+            width: 100%;
+            height: 150px;
+        }
+        .finSub {
+            color:#000000;
+            position: relative;
+            padding: .3em 1em;
+            border: 2px solid;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background-color: transparent;
+            background-position: center;
+            background-size: cover;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.7em!important;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            display: inline-block;
+            margin: 1rem;
+            position: relative;
+        }
+        .finSub:hover {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+    </style>
+</head>
+<body>
+<center>
+    <div style="background-color:#FFFFFF">
+        <h2 style="color:#2d4113">EMG Photostrip Maker</h1>
+                <hr style="width:85%; border: 0;height: 3px;background-image: linear-gradient(to right, rgba(140, 199, 64, 0), rgba(140, 199, 64, 1), rgba(140, 199, 64, 0));">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4" id="instructions">
+
+                <!-- Script -->
+                <script type='text/javascript'>
+                function screenshot(){
+                   html2canvas(document.getElementById('preview')).then(function(canvas) {
+                    //document.body.appendChild(canvas);
+                    var a = document.createElement('a');
+                    a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                    var picture = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                    a.download = 'photo-strip-preview.jpg';
+                    a.click();
+                   });
+                  }
+                </script>
+
+
+                <h3>Instructions</h3>
+                <p style="color:#C5C5C5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <br>
+                <form action="https://mailthis.to/shoheietzel@gmail.com"
+                    method="POST">
+                    <input type="text" name="name" placeholder="Your name">
+                    <input type="email" name="_replyto" placeholder="Your email">
+                    <input type="file" name="file" value= <script type="text/javascript">picture</script>>
+                    <input type="submit" value="Send">
+                </form>
+            </div>
+            <div class="col-sm-4" id="previewDiv">
+                <div id="preview" style="width:250px;height:500px;border:1px solid black;text-align: center; background-color: #000000">
+                    <div id="headerText" style="width:250px;height:50px;line-height:50px;color:#FFFFFF">Header Text</div>
+                    <div id="photoArea" style="margin: 0px 25px 0px 25px; background-color: white;width:200px;height:400px;"></div>
+                    <div id="footerText" style="width:250px;height:50px;line-height:50px;color:#FFFFFF">Footer Text</div>
+                </div>
+            </div>
+            <div class="col-sm-4" id="googleForm">
+                <h3>Settings</h3>
+                <form class="user-form" method="post" onsubmit="return changeSettings()">
+                    <div class="field">
+                        <label for="bgColor">Background Color:</label>
+                        <input name="bgColor" id="bgColor" class="jscolor" size="10" autofocus value="000000">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label for="headerValue">Header Text:</label>
+                        <input type="text" id="headerValue">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label for="footerValue">Footer Text:</label>
+                        <input type="text" id="footerValue">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label for="fontColor">Color:</label>
+                        <input name="fontColor" id="fontColor" class="jscolor" size="10" autofocus value="FFFFFF">
+                    </div>
+                    <hr style="margin: 2px 0 2px 0; background-color: #EEEEEE;">
+                    <div class="field">
+                        <input type="submit" value="Preview" name="Submit">
+                        <input type='button' id='but_screenshot' value='Save screenshot' onclick='screenshot();'><br/>
+                    </div>
+                    <!--
+                    <div class="user-form field" style="float: right; background-color: #FFFFFF">
+                        <button onclick="return resetSettings()">Reset</button>
+                    </div>
+                    -->
+                </form>
+                <br>
+                <a class="finSub" href="https://forms.gle/nFo1bd2GJ3V845UT7">Finish Submitting
+                </a>
+            </div>
+            <script>
+                    var preview = document.getElementById("preview");
+                    var headerText = document.getElementById("headerText");
+                    var footerText = document.getElementById("footerText");
+
+                    function changeSettings() {
+                        preview.style.backgroundColor = '#' + document.getElementById("bgColor").value;
+                        var headerVal = document.getElementById("headerValue").value;
+                        document.getElementById("headerText").innerHTML = headerVal;
+                        var footerVal = document.getElementById("footerValue").value;
+                        document.getElementById("footerText").innerHTML = footerVal;
+
+                        headerText.style.color = '#' + document.getElementById("fontColor").value;
+                        footerText.style.color = '#' + document.getElementById("fontColor").value;
+
+                        let stateObj = {
+                            foo: "bar",
+                        };
+
+                        history.pushState(stateObj, "page 2", "bar.html");
+
+                      return false;
+                    }
+
+                    function getUrlVars() {
+                        var vars = {};
+                        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                            vars[key] = value;
+                        });
+                        return vars;
+                    }
+
+                    /*$(document).ready(function () {
+
+
+
+                            var hd = getUrlVars()["hd"];
+                            var ft = getUrlVars()["ft"];
+                            var bg = getUrlVars()["bg"];
+                            var fc = getUrlVars()["fc"];
+
+                            //$('input[id="footerValue"]').val('Work!');
+
+                            document.getElementById("headerValue").value = hd;
+                            document.getElementById("footerValue").value = ft;
+                            document.getElementById("bgColor").value = bg;
+                            document.getElementById("fontColor").value = fc;
+
+                            document.getElementById("headerText").innerHTML = hd;
+                            document.getElementById("footerText").innerHTML = ft;
+                            //headerText.style.color = '#FFFFFF';
+                            //footerText.style.color = '#FFFFFF';
+
+                            return vars;
+
+                        });*/
+
+
+                    /*
+                    function resetSettings() {
+                        preview.style.backgroundColor = '#000000';
+                        document.getElementById("headerText").innerHTML = "Header Text";
+                        document.getElementById("footerText").innerHTML = "Footer Text";
+
+                        headerText.style.color = '#FFFFFF';
+                        footerText.style.color = '#FFFFFF';
+
+                      return false;
+                    }
+                    */
+                    </script>
+
+        </div>
+    </div>
+</div>
+
+</center>
+
+</body>
+</html>
