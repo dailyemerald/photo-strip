@@ -126,9 +126,22 @@
                     <hr style="margin: 2px 0 2px 0; background-color: #EEEEEE;">
                     <div class="field">
                         <input type="submit" value="Preview" name="Submit">
+                    </div>
+
+
+
+                    <form action="https://mailthis.to/shoheietzel@gmail.com"
+                        method="POST">
+                        <input type="text" name="name" placeholder="Your name">
+                        <input type="email" name="_replyto" placeholder="Your email">
+                        <input type="submit" value="Send">
+                    </form>
+                    <!--
+                    <div class="field">
+                        <input type="submit" value="Preview" name="Submit">
                         <input type='button' id='but_screenshot' value='Save screenshot' onclick='screenshot();'><br/>
                     </div>
-                    <!--
+
                     <div class="user-form field" style="float: right; background-color: #FFFFFF">
                         <button onclick="return resetSettings()">Reset</button>
                     </div>
@@ -165,6 +178,7 @@
 
 
                         history.pushState(null, null, newUrl);
+                        window.open()
 
                       return false;
                     }
