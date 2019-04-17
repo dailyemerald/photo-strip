@@ -191,7 +191,6 @@
                     }
 
                     $(document).ready(function () {
-                            document.getElementById("curUrl").value = window.location.href;
 
                             var hd = getUrlVars()["hd"];
                             var ft = getUrlVars()["ft"];
@@ -209,6 +208,8 @@
                             document.getElementById("footerText").innerHTML = ft;
                             //headerText.style.color = '#FFFFFF';
                             //footerText.style.color = '#FFFFFF';
+                        
+                            document.getElementById("curUrl").value = window.location.href;
 
                             return vars;
 
