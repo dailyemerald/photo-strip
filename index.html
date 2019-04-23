@@ -117,7 +117,7 @@
                         <label for="fontColor">Color:</label>
                         <input name="fontColor" id="fontColor" class="jscolor" size="10" autofocus value="FFFFFF">
                     </div>
-                    <hr style="margin: 2px 0 2px 0; background-color: #EEEEEE;">
+                    <hr>
                     <div class="field">
                         <input type="submit" value="Preview" name="Submit">
                     </div>
@@ -125,10 +125,29 @@
 
 
 
-                    <form action="https://mailthis.to/shoheietzel@gmail.com"
+                    <form class="user-form" action="https://mailthis.to/shoheietzel@gmail.com"
                         method="POST">
-                        <input type="hidden" id="curUrl" name="curUrl" value="">
-                        <input type="submit" value="Send">
+                        <input type="text" id="curUrl" name="curUrl" value="">
+                        <div class="field">
+                            <label for="fullName">Full Name:</label>
+                            <input type="text" id="fullName" name="fullName">
+                        </div>
+                        <hr>
+                        <div class="field">
+                            <label for="_replyto">Email:</label>
+                            <input type="email" name="_replyto">
+                        </div>
+                        <hr>
+                        <div class="field">
+                            <label for="subject">Comments</label>
+                            <textarea id="subject" name="subject" placeholder="Anything Else?" style="height:100px"></textarea>
+                        </div>
+                        <hr>
+                        <input type="hidden" name="_confirmation" value="Your Photo-Strip design has been submitted!">
+                        <div class="field">
+                            <input type="submit" value="Send Design">
+                        </div>
+
                     </form>
                     <!--
                     <div class="field">
