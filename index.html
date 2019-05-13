@@ -1,7 +1,7 @@
 <!-- sample URL: file:///Users/shoheietzel/Documents/EMG/PhotostripProject/photostripVersion2.html?hd=hello&ft=goodbye&bg=000000&fc=F5FF69 -->
 <!DOCTYPE html>
 <html>
-<head><!--test-->
+<head>
     <title>Photo-Strip Maker</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,9 +87,210 @@
                 <h3>Instructions</h3>
                 <p style="color:#C5C5C5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 <br>
+                <form class="user-form" method="post" onsubmit="return getURL()">
+                    <div class="field">
+                        <label for="keyword">Search a keyword:</label>
+                        <input type="text" name="keyword" id="keyword" size="10" autofocus value="">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <input type="submit" value="Preview" name="Submit">
+                    </div>
+                </form>
+
+
+                <script type='text/javascript'>
+                    function getRandomInt(max) {
+                      return Math.floor(Math.random() * Math.floor(max));
+                    }
+                    function sleep(ms) {
+                      return new Promise(resolve => setTimeout(resolve, ms));
+                    }
+
+                    function getURL() {
+                        var myUrl = 'https://source.unsplash.com/450x800/?' + document.getElementById("keyword").value;
+                        var myUrlString = 'url(' + 'https://source.unsplash.com/450x800/?' + document.getElementById("keyword").value + ')';
+
+                        var urls = [];
+                        var xhrs = [];
+                        var progress = [];
+                        var bool = false;
+                        var cur_xhr;
+
+                        function getRequest(i) {
+                          bool = false;
+                            xhrs[i] = new XMLHttpRequest();
+                            do {
+                                xhrs[i].open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                                xhrs[i].onload = function () {
+                                    if (urls.includes(String(xhrs[i].responseURL),0) == false){
+                                        urls.push(xhrs[i].responseURL);
+                                        console.log('Pushed xhrs'+String(i));
+                                        $("#testPic"+String(i)).attr("src",String(xhrs[i].responseURL));
+                                        window.bool = true;
+                                        progress[i] = true;
+                                    }
+                                };
+                            } while (window.bool == false);
+                            xhrs[i].send(null);
+
+                        }
+
+
+                        const j = 9;
+                        for (let i = 1; i <= j; i++) {
+                            getRequest(i);
+                        }
+
+                        /*var xhr1 = new XMLHttpRequest();
+                        xhr1.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                        xhr1.onload = function () {
+                            urls.push(xhr1.responseURL);
+                            $("#testPic1").attr("src",String(xhr1.responseURL));
+                        };
+                        xhr1.send(null);
+                        console.log('Done w/xhr1');
+
+                        bool = false;
+                        console.log('bool before xhr2: '+bool);
+                        var xhr2 = new XMLHttpRequest();
+                        do {
+                            xhr2.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr2.onload = function () {
+                                if (urls.includes(String(xhr2.responseURL),0) == false){
+                                    urls.push(xhr2.responseURL);
+                                    console.log('Pushed w/xhr2');
+                                    $("#testPic2").attr("src",String(xhr2.responseURL));
+                                    window.bool = true;
+                                    console.log('bool should be true xhr2: '+bool);
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr2.send(null);
+                        console.log('Done w/xhr2');
+
+                        bool = false;
+                        var xhr3 = new XMLHttpRequest();
+                        do {
+                            xhr3.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr3.onload = function () {
+                                if (urls.includes(String(xhr3.responseURL),0) == false){
+                                    urls.push(xhr3.responseURL);
+                                    console.log('Pushed w/xhr3');
+                                    $("#testPic3").attr("src",String(xhr3.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr3.send(null);
+                        console.log('Done w/xhr3');
+
+                        bool = false;
+                        var xhr4 = new XMLHttpRequest();
+                        do {
+                            xhr4.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr4.onload = function () {
+                                if (urls.includes(String(xhr4.responseURL),0) == false){
+                                    urls.push(xhr4.responseURL);
+                                    console.log('Pushed w/xhr4');
+                                    $("#testPic4").attr("src",String(xhr4.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr4.send(null);
+                        console.log('Done w/xhr4');
+
+                        bool = false;
+                        var xhr5 = new XMLHttpRequest();
+                        do {
+                            xhr5.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr5.onload = function () {
+                                if (urls.includes(String(xhr5.responseURL),0) == false){
+                                    urls.push(xhr5.responseURL);
+                                    console.log('Pushed w/xhr5');
+                                    $("#testPic5").attr("src",String(xhr5.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr5.send(null);
+                        console.log('Done w/xhr5');
+
+                        bool = false;
+                        var xhr6 = new XMLHttpRequest();
+                        do {
+                            xhr6.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr6.onload = function () {
+                                if (urls.includes(String(xhr6.responseURL),0) == false){
+                                    urls.push(xhr6.responseURL);
+                                    console.log('Pushed w/xhr6');
+                                    $("#testPic6").attr("src",String(xhr6.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr6.send(null);
+                        console.log('Done w/xhr6');
+
+                        bool = false;
+                        var xhr7 = new XMLHttpRequest();
+                        do {
+                            xhr7.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr7.onload = function () {
+                                if (urls.includes(String(xhr7.responseURL),0) == false){
+                                    urls.push(xhr7.responseURL);
+                                    console.log('Pushed w/xhr7');
+                                    $("#testPic7").attr("src",String(xhr7.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr7.send(null);
+                        console.log('Done w/xhr7');
+
+                        bool = false;
+                        var xhr8 = new XMLHttpRequest();
+                        do {
+                            xhr8.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr8.onload = function () {
+                                if (urls.includes(String(xhr8.responseURL),0) == false){
+                                    urls.push(xhr8.responseURL);
+                                    console.log('Pushed w/xhr8');
+                                    $("#testPic8").attr("src",String(xhr8.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr8.send(null);
+                        console.log('Done w/xhr8');
+
+                        bool = false;
+                        var xhr9 = new XMLHttpRequest();
+                        do {
+                            xhr9.open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
+                            xhr9.onload = function () {
+                                if (urls.includes(String(xhr9.responseURL),0) == false){
+                                    urls.push(xhr9.responseURL);
+                                    console.log('Pushed w/xhr9');
+                                    $("#testPic9").attr("src",String(xhr9.responseURL));
+                                    window.bool = true;
+                                }
+                            };
+                        } while (window.bool == false);
+                        xhr9.send(null);
+                        console.log('Done w/xhr9');
+                        console.log(urls);
+
+                        //document.getElementById("preview").style.backgroundImage = myUrlString;
+                        //$("#preview").css('background-image', myUrlString);*/
+                        return false;
+                    }
+
+                </script>
             </div>
             <div class="col-sm-4" id="previewDiv">
-                <div id="preview" style="width:250px;height:500px;border:1px solid black;text-align: center; background-color: #000000">
+                <div id="preview" style="width:250px;height:500px;border:1px solid black;text-align: center; background-color: #000000;background-image: url();background-position: center;">
                     <div id="headerText" style="width:250px;height:50px;line-height:50px;color:#FFFFFF">Header Text</div>
                     <div id="photoArea" style="margin: 0px 25px 0px 25px; background-color: white;width:200px;height:400px;"></div>
                     <div id="footerText" style="width:250px;height:50px;line-height:50px;color:#FFFFFF">Footer Text</div>
@@ -226,7 +427,7 @@
                             //document.getElementById("curUrl").value = window.location.href;
                             //document.getElementById("curUrlTest").innerHTML = window.location.href;
 
-                            return vars;
+                            return;
 
                         });
 
@@ -246,6 +447,60 @@
                     </script>
 
         </div>
+        <hr style="height:2px; border:none; color:#000; background-color:#000;">
+        <div class="row">
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic1" src="" width="85%"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic2" src="" width="85%"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic3" src="" width="85%"/>
+                </div>
+            </div>
+        </div>
+        <hr style="height:1px; border:none; color:#555; background-color:#555; width:50%">
+        <div class="row">
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic4" src="" width="85%"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic5" src="" width="85%"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic6" src="" width="85%"/>
+                </div>
+            </div>
+        </div>
+        <hr style="height:1px; border:none; color:#555; background-color:#555; width:50%">
+        <div class="row">
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic7" src="" width="85%"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic8" src="" width="85%"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <img id="testPic9" src="" width="85%"/>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -253,3 +508,5 @@
 
 </body>
 </html>
+
+
