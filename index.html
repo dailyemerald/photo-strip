@@ -122,7 +122,7 @@
                             cur_pic.setAttribute("src",'loading5.gif');
                         }
 
-                        var sizes = ['720x1280','900x1600','768x1366','1080x1920']
+                        var sizes = ['1080x1920','1440x2560','2160x3840']
                         var urls = [];
                         var xhrs = [];
                         var bool = false;
@@ -130,8 +130,8 @@
 
                         async function getRequest(i) {
                             var start = new Date();
-                            var myUrl = 'https://source.unsplash.com/'+sizes[i%4]+'/?' + document.getElementById("keyword").value;
-                            var myUrlString = 'url(' + 'https://source.unsplash.com/'+sizes[i%4]+'/?' + document.getElementById("keyword").value + ')';
+                            var myUrl = 'https://source.unsplash.com/'+sizes[i%3]+'/?' + document.getElementById("keyword").value;
+                            var myUrlString = 'url(' + 'https://source.unsplash.com/'+sizes[i%3]+'/?' + document.getElementById("keyword").value + ')';
 
                             let promise = await new Promise(function(resolve,reject){
                                 xhrs[i] = new XMLHttpRequest();
