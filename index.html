@@ -115,7 +115,6 @@
                     }
 
                     function getURL() {
-
                         //initiate loading gifs
                         var cur_pic;
                         for (let i = 1;i <= 9;i++){
@@ -137,8 +136,11 @@
                                 xhrs[i] = new XMLHttpRequest();
                                 xhrs[i].open('GET', myUrl + '?sig='+ String(getRandomInt(1000)), true);
                                 xhrs[i].onload = function () {
-                                    if (urls.includes(String(xhrs[i].responseURL),0) == false){
-                                        urls.push(xhrs[i].responseURL);
+                                    var regex = /photo-(.*?)?ixlib/;
+                                    var m = regex.exec(String(xhrs[i].responseURL));
+                                    //console.log(m[1]);
+                                    if (urls.includes(m[1],0) == false){
+                                        urls.push(m[1]);
                                         //console.log('Pushed xhrs'+String(i));
                                         $("#testPic"+String(i)).attr("src",String(xhrs[i].responseURL));
                                         resolve("Success for " + i);
