@@ -65,7 +65,7 @@
 <center>
     <div style="background-color:#FFFFFF">
         <h2 style="color:#2d4113">EMG Photostrip Maker</h1>
-                <hr style="width:85%; border: 0;height: 3px;background-image: linear-gradient(to right, rgba(140, 199, 64, 0), rgba(140, 199, 64, 1), rgba(140, 199, 64, 0));">
+                <hr style="width:100%; border: 0;height: 3px;background-image: linear-gradient(to right, rgba(140, 199, 64, 0), rgba(140, 199, 64, 1), rgba(140, 199, 64, 0));">
     </div>
     <div class="container">
         <div class="row">
@@ -117,20 +117,21 @@
                     function getURL() {
                         //initiate loading gifs
                         var cur_pic;
-                        for (let i = 1;i <= 9;i++){
+                        for (let i = 1;i <= 6;i++){
                             cur_pic = document.getElementById("testPic"+String(i));
                             cur_pic.setAttribute("src",'loading5.gif');
                         }
 
-                        var sizes = ['450x800','720x1280','900x1600']
+                        var sizes = ['720x1280','900x1600','768x1366','1080x1920']
                         var urls = [];
                         var xhrs = [];
                         var bool = false;
                         var cur_xhr;
 
                         async function getRequest(i) {
-                            var myUrl = 'https://source.unsplash.com/'+sizes[i%3]+'/?' + document.getElementById("keyword").value;
-                            var myUrlString = 'url(' + 'https://source.unsplash.com/'+sizes[i%3]+'/?' + document.getElementById("keyword").value + ')';
+                            var start = new Date();
+                            var myUrl = 'https://source.unsplash.com/'+sizes[i%4]+'/?' + document.getElementById("keyword").value;
+                            var myUrlString = 'url(' + 'https://source.unsplash.com/'+sizes[i%4]+'/?' + document.getElementById("keyword").value + ')';
 
                             let promise = await new Promise(function(resolve,reject){
                                 xhrs[i] = new XMLHttpRequest();
@@ -139,19 +140,25 @@
                                     var regex = /photo-(.*?)?ixlib/;
                                     var m = regex.exec(String(xhrs[i].responseURL));
                                     //console.log(m[1]);
-                                    if (urls.includes(m[1],0) == false){
+                                    /*if (urls.includes(m[1],0) == false){
                                         urls.push(m[1]);
                                         //console.log('Pushed xhrs'+String(i));
                                         $("#testPic"+String(i)).attr("src",String(xhrs[i].responseURL));
                                         resolve("Success for " + i);
-                                    } else {reject("Error for " + i);}
+                                    } else {reject("Error for " + i);}*/
+                                    $("#testPic"+String(i)).attr("src",String(xhrs[i].responseURL));
+                                    resolve("Success for " + i);
                                 };
                                 xhrs[i].send(null);
                             });
+                            var finish = new Date();
+                            var difference = new Date();
+                            difference.setTime(finish.getTime() - start.getTime());
+                            console.log( difference.getMilliseconds() );
                             return promise;
                         }
 
-                        function sequential(i) {
+                        /*function sequential(i) {
                             getRequest(i).then(function(good){
                                 console.log(good);
                                 if (i <= 8) {sequential(i+1);}
@@ -159,8 +166,10 @@
                                 console.log(bad);
                                 if (i <= 9) {sequential(i);}
                             });
-                        }
-                        sequential(1);
+                        }*/
+                        //sequential(1);
+                        for (let i = 1; i <= 6; i++){getRequest(i);}
+                        console.log("Done.")
                         return false;
                     }
 
@@ -326,58 +335,38 @@
         </div>
         <hr style="height:2px; border:none; color:#000; background-color:#000;">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <div id='testy'>
-                    <img id="testPic1" src="" width="85%" style="vertical-align: middle;" class="loading"/>
+                    <img id="testPic1" src="" width="100%" style="vertical-align: middle;" class="loading"/>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <div>
-                    <img id="testPic2" src="" width="85%" style="vertical-align: middle;" class="loading"/>
+                    <img id="testPic2" src="" width="100%" style="vertical-align: middle;" class="loading"/>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <div>
-                    <img id="testPic3" src="" width="85%" style="vertical-align: middle;" class="loading"/>
+                    <img id="testPic3" src="" width="100%" style="vertical-align: middle;" class="loading"/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div>
+                    <img id="testPic4" src="" width="100%" style="vertical-align: middle;" class="loading"/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div>
+                    <img id="testPic5" src="" width="100%" style="vertical-align: middle;" class="loading"/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div>
+                    <img id="testPic6" src="" width="100%" style="vertical-align: middle;" class="loading"/>
                 </div>
             </div>
         </div>
         <hr style="height:1px; border:none; color:#555; background-color:#555; width:50%">
-        <div class="row">
-            <div class="col-sm-4">
-                <div>
-                    <img id="testPic4" src="" width="85%" style="vertical-align: middle;" class="loading"/>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div>
-                    <img id="testPic5" src="" width="85%" style="vertical-align: middle;" class="loading"/>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div>
-                    <img id="testPic6" src="" width="85%" style="vertical-align: middle;" class="loading"/>
-                </div>
-            </div>
-        </div>
-        <hr style="height:1px; border:none; color:#555; background-color:#555; width:50%">
-        <div class="row">
-            <div class="col-sm-4">
-                <div>
-                    <img id="testPic7" src="" width="85%" style="vertical-align: middle;" class="loading"/>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div>
-                    <img id="testPic8" src="" width="85%" style="vertical-align: middle;" class="loading"/>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div>
-                    <img id="testPic9" src="" width="85%" style="vertical-align: middle;" class="loading"/>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
