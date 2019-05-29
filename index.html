@@ -99,12 +99,12 @@
           click: false  // auto animated on click/tap (default false)
         });
 
-        titanic.items[0] = titanic;
-        titanic.items[1] = titanic;
-        titanic.items[2] = titanic;
-        titanic.items[3] = titanic;
-        titanic.items[4] = titanic;
-        titanic.items[5] = titanic;
+        //titanic.items[0] = titanic;
+        //titanic.items[1] = titanic;
+        //titanic.items[2] = titanic;
+        //titanic.items[3] = titanic;
+        //titanic.items[4] = titanic;
+        //titanic.items[5] = titanic;
 
         function screenshot(){
            html2canvas(document.getElementById('preview')).then(function(canvas) {
@@ -270,8 +270,8 @@
 
         $(document).ready(function () {
 
-                var hd = getUrlVars()["hd"];
-                var ft = getUrlVars()["ft"];
+                var hd = getUrlVars()["hd"].replace("%20", " ");
+                var ft = getUrlVars()["ft"].replace("%20", " ");
                 var bg = getUrlVars()["bg"];
                 var fc = getUrlVars()["fc"];
                 var img = getUrlVars()["img"];
