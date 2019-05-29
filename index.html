@@ -12,6 +12,7 @@
     <script type="text/javascript" src="html2canvas.js"></script>
     <script src="https://cdn.rawgit.com/icons8/titanic/master/dist/js/titanic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.5.9/bodymovin.min.js"></script>
+    <script src="textFit.js"></script>
     <style>
         .user-form {
             padding:20px;
@@ -86,6 +87,28 @@
 
         .hover_area:hover .overlay {
           opacity: 0.5;
+        }
+
+        ul {
+            width: 50%;
+            min-width: 10em;
+            font-size: 1em;
+            list-style:none;
+        }
+
+        ul li {
+            display: none;
+            padding: 0.2em;
+            border: 1px solid #ccc;
+        }
+
+        ul li.selected,
+        ul:hover li {
+            display: list-item;
+        }
+
+        li:hover {
+            background-color: #f90;
         }
 
     </style>
@@ -221,6 +244,8 @@
 
             history.pushState(null, null, newUrl);
             document.getElementById("curUrl").value = window.location.href;
+            textFit(document.getElementById('headerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
+            textFit(document.getElementById('footerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
 
           return false;
         }
@@ -271,8 +296,8 @@
 
         $(document).ready(function () {
 
-                var hd = getUrlVars()["hd"].replace("%20", " ");
-                var ft = getUrlVars()["ft"].replace("%20", " ");
+                var hd = getUrlVars()["hd"].replace(/%20/g, " ");
+                var ft = getUrlVars()["ft"].replace(/%20/g, " ");
                 var bg = getUrlVars()["bg"];
                 var fc = getUrlVars()["fc"];
                 var img = getUrlVars()["img"];
@@ -293,6 +318,12 @@
 
                 //document.getElementById("curUrl").value = window.location.href;
                 //document.getElementById("curUrlTest").innerHTML = window.location.href;
+
+                textFit(document.getElementById('headerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
+                textFit(document.getElementById('footerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
+
+                document.getElementById("fontForm").style.display="none";
+
 
                 return;
 
@@ -318,22 +349,31 @@
                     </div>
                     <hr>
                     <div class="field">
-                        <input type="submit" value="Preview" name="Submit">
+                        <input type="submit" value="View Images" name="Submit">
                     </div>
                 </form>
 
-
                 <script type='text/javascript'>
-
+                    $('#fontList li').click(
+                        function(){
+                            var chosen = $(this).index();
+                            $('#fontSelector option:selected')
+                                .removeAttr('selected');
+                            $('#fontSelector option')
+                                .eq(chosen)
+                                .attr('selected',true);
+                            $('.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        });
 
 
                 </script>
             </div>
             <div class="col-sm-4" id="previewDiv">
                 <div id="preview" style="width:200px;height:600px;border:1px solid black;text-align: center; background-color: #000000;background-position: center;">
-                    <div id="headerText" style="width:200px;height:65px;line-height:25px;margin:10px 0px 0px 0px;color:#FFFFFF">Header Text</div>
+                    <div id="headerText" style="width:190px;height:65px;line-height:30px;margin:5px 5px 5px 5px;color:#FFFFFF;font-size:25px;font-size: 1.7vw;">Header Text</div>
                     <div id="photoArea" style="margin: 0px 20px 0px 20px; background-color: white;width:160px;height:450px;"></div>
-                    <div id="footerText" style="width:200px;height:65px;line-height:25px;margin:10px 0px 0px 0px;color:#FFFFFF">Footer Text</div>
+                    <div id="footerText" style="width:190px;height:65px;line-height:30px;margin:5px 5px 5px 5px;color:#FFFFFF;font-size:25px;font-size: 1.7vw;">Footer Text</div>
                 </div>
             </div>
             <div class="col-sm-4" id="googleForm">
@@ -363,6 +403,17 @@
                         <input type="submit" value="Preview" name="Submit">
                     </div>
                 </form>
+                    <div>
+                        <form id="fontForm" action="#" method="post">
+                            <select id="fontSelector" name="fontSelector">
+                                <option value="calibri">Calibri</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Comic Sans MS">Comic Sans MS</option>
+                            </select>
+                        </form>
+                    </div>
+
+
 
 
 
