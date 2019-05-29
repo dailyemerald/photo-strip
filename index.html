@@ -132,6 +132,7 @@
             //initiate loading gifs
             var cur_pic;
             for (let i = 1;i <= 6;i++){
+                titanic.items[i-1].off();
                 cur_pic = document.getElementById("testPic"+String(i));
                 cur_pic.setAttribute("src",'loading5.gif');
             }
