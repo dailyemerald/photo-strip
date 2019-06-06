@@ -216,7 +216,8 @@
             var headerText = document.getElementById("headerText");
             var footerText = document.getElementById("footerText");
             var bgColor = document.getElementById("bgColor").value;
-            var fontColor = document.getElementById("fontColor").value;
+            var headerFontColor = document.getElementById("headerFontColor").value;
+            var footerFontColor = document.getElementById("footerFontColor").value;
 
 
             preview.style.backgroundColor = '#' + bgColor;
@@ -226,15 +227,15 @@
             var footerVal = document.getElementById("footerValue").value;
             document.getElementById("footerText").innerHTML = footerVal;
 
-            headerText.style.color = '#' + fontColor;
-            footerText.style.color = '#' + fontColor;
+            headerText.style.color = '#' + headerFontColor;
+            footerText.style.color = '#' + footerFontColor;
 
             console.log(bgUrl);
             var sliced1 = bgUrl.substring(5);
             var sliced2 = sliced1.substring(0,sliced1.indexOf('")'));
             console.log(sliced2);
 
-            newUrl = "?" + "hd=" + headerVal + "&ft=" + footerVal + "&bg=" + bgColor + "&fc=" + fontColor + "&img=" + sliced2;
+            newUrl = "?" + "hd=" + headerVal + "&ft=" + footerVal + "&bg=" + bgColor + "&hfc=" + headerFontColor + "&ffc=" + footerFontColor + "&img=" + sliced2;
 
             //var hd = getUrlVars()["hd"];
             //var ft = getUrlVars()["ft"];
@@ -299,7 +300,8 @@
                 var hd = getUrlVars()["hd"].replace(/%20/g, " ");
                 var ft = getUrlVars()["ft"].replace(/%20/g, " ");
                 var bg = getUrlVars()["bg"];
-                var fc = getUrlVars()["fc"];
+                var hfc = getUrlVars()["hfc"];
+                var ffc = getUrlVars()["ffc"];
                 var img = getUrlVars()["img"];
 
                 //$('input[id="footerValue"]').val('Work!');
@@ -309,7 +311,8 @@
                 document.getElementById("headerValue").value = hd;
                 document.getElementById("footerValue").value = ft;
                 document.getElementById("bgColor").value = bg;
-                document.getElementById("fontColor").value = fc;
+                document.getElementById("headerFontColor").value = hfc;
+                document.getElementById("footerFontColor").value = ffc;
 
                 document.getElementById("headerText").innerHTML = hd;
                 document.getElementById("footerText").innerHTML = ft;
@@ -390,13 +393,18 @@
                     </div>
                     <hr>
                     <div class="field">
+                        <label for="headerFontColor">Header Color:</label>
+                        <input name="headerFontColor" id="headerFontColor" class="jscolor" size="10" autofocus value="FFFFFF">
+                    </div>
+                    <hr>
+                    <div class="field">
                         <label for="footerValue">Footer Text:</label>
                         <input type="text" id="footerValue" value="Footer Text">
                     </div>
                     <hr>
                     <div class="field">
-                        <label for="fontColor">Color:</label>
-                        <input name="fontColor" id="fontColor" class="jscolor" size="10" autofocus value="FFFFFF">
+                        <label for="footerFontColor">Footer Color:</label>
+                        <input name="footerFontColor" id="footerFontColor" class="jscolor" size="10" autofocus value="FFFFFF">
                     </div>
                     <hr>
                     <div class="field">
