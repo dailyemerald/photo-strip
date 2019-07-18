@@ -13,6 +13,15 @@
     <script src="https://cdn.rawgit.com/icons8/titanic/master/dist/js/titanic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.5.9/bodymovin.min.js"></script>
     <script src="textFit.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script src="HiGoogleFonts/js/fonts.js"></script>
+    <link rel="stylesheet" href="HiGoogleFonts/css/fonts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css">
+
+
     <style>
         .user-form {
             padding:20px;
@@ -90,16 +99,16 @@
         }
 
         ul {
-            width: 50%;
+            /*width: 50%;
             min-width: 10em;
             font-size: 1em;
-            list-style:none;
+            list-style:none;*/
         }
 
         ul li {
-            display: none;
+            /*display: none;
             padding: 0.2em;
-            border: 1px solid #ccc;
+            border: 1px solid #ccc;*/
         }
 
         ul li.selected,
@@ -109,6 +118,11 @@
 
         li:hover {
             background-color: #f90;
+        }
+
+        .instructions {
+            color:#757575;
+            text-align: left;
         }
 
     </style>
@@ -218,7 +232,14 @@
             var bgColor = document.getElementById("bgColor").value;
             var headerFontColor = document.getElementById("headerFontColor").value;
             var footerFontColor = document.getElementById("footerFontColor").value;
+            var fontFamily = document.getElementById("select_fontfamily").value;
 
+            var bgType = "";
+            if (document.getElementById("solidRadio").checked == true) {
+                bgType = "solid";
+            } else {
+                bgType = "image";
+            };
 
             preview.style.backgroundColor = '#' + bgColor;
             var bgUrl = preview.style.backgroundImage;
@@ -235,7 +256,7 @@
             var sliced2 = sliced1.substring(0,sliced1.indexOf('")'));
             console.log(sliced2);
 
-            newUrl = "?" + "hd=" + headerVal + "&ft=" + footerVal + "&bg=" + bgColor + "&hfc=" + headerFontColor + "&ffc=" + footerFontColor + "&img=" + sliced2;
+            newUrl = "?" + "ff=" + fontFamily + "&hd=" + headerVal + "&ft=" + footerVal + "&bg=" + bgColor + "&hfc=" + headerFontColor + "&ffc=" + footerFontColor + "&img=" + sliced2 + "&bgtype=" + bgType;
 
             //var hd = getUrlVars()["hd"];
             //var ft = getUrlVars()["ft"];
@@ -244,9 +265,12 @@
 
 
             history.pushState(null, null, newUrl);
-            document.getElementById("curUrl").value = window.location.href;
-            textFit(document.getElementById('headerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
-            textFit(document.getElementById('footerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
+            var urlArray = window.location.href.split('photo-strip/');
+            var urlToSend = urlArray[0]+'photo-strip/editorsPage.html'+urlArray[1];
+            console.log(urlToSend);
+            document.getElementById("curUrl").value = urlToSend;
+            textFit(document.getElementById('headerText'), {multiLine: true, alignVert: true,maxFontSize: 35});
+            textFit(document.getElementById('footerText'), {multiLine: true, alignVert: true,maxFontSize: 35});
 
           return false;
         }
@@ -296,81 +320,160 @@
         }
 
         $(document).ready(function () {
-
-                var hd = getUrlVars()["hd"].replace(/%20/g, " ");
-                var ft = getUrlVars()["ft"].replace(/%20/g, " ");
-                var bg = getUrlVars()["bg"];
-                var hfc = getUrlVars()["hfc"];
-                var ffc = getUrlVars()["ffc"];
-                var img = getUrlVars()["img"];
-
-                //$('input[id="footerValue"]').val('Work!');
-
-                document.getElementById("preview").setAttribute("style","background-image: url('" + img + "');width:200px;height:600px;border:1px solid black;text-align: center; background-color: #000000;background-position: center;background-size: cover;");
-                console.log(document.getElementById("preview").style.backgroundImage);
-                document.getElementById("headerValue").value = hd;
-                document.getElementById("footerValue").value = ft;
-                document.getElementById("bgColor").value = bg;
-                document.getElementById("headerFontColor").value = hfc;
-                document.getElementById("footerFontColor").value = ffc;
-
-                document.getElementById("headerText").innerHTML = hd;
-                document.getElementById("footerText").innerHTML = ft;
-                //headerText.style.color = '#FFFFFF';
-                //footerText.style.color = '#FFFFFF';
-
-                //document.getElementById("curUrl").value = window.location.href;
-                //document.getElementById("curUrlTest").innerHTML = window.location.href;
-
-                textFit(document.getElementById('headerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
-                textFit(document.getElementById('footerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
-
-                document.getElementById("fontForm").style.display="none";
-
-
-                return;
-
+            $( "#select_fontfamily" ).higooglefonts({
+                selectedCallback:function(e){
+                    console.log(document.getElementById("select_fontfamily").value);
+                },
+                loadedCallback:function(font){
+                    console.log(document.getElementById("select_fontfamily").value);
+                    /*/////// This is where you should apply font.///////
+                    /////////////////////////////////////////////////////*/
+                    $("#headerText").css("font-family", font); // Change the font-family of the #paragraph
+                    $("#footerText").css("font-family", font); // Change the font-family of the #paragraph
+                }
             });
+
+
+            if (typeof getUrlVars()["hd"] != 'undefined') {
+                var hd = getUrlVars()["hd"].replace(/%20/g, " ");
+            } else {
+                var hd = "Header Text";
+            }
+
+            if (typeof getUrlVars()["ft"] != 'undefined') {
+                var ft = getUrlVars()["ft"].replace(/%20/g, " ");
+            } else {
+                var ft = "Footer Text";
+            }
+
+            var bg = getUrlVars()["bg"];
+            var hfc = getUrlVars()["hfc"];
+            var ffc = getUrlVars()["ffc"];
+            var img = getUrlVars()["img"];
+            var ff = getUrlVars()["ff"];
+
+            //$("#headerText").css("font-family", ff); // Change the font-family of the #paragraph
+            //$("#footerText").css("font-family", ff); // Change the font-family of the #paragraph
+
+            //$('input[id="footerValue"]').val('Work!');
+
+            document.getElementById("preview").setAttribute("style","background-image: url('" + img + "');width:200px;height:600px;border:1px solid black;text-align: center; background-color: #000000;background-position: center;background-size: cover;");
+            console.log(document.getElementById("preview").style.backgroundImage);
+            document.getElementById("headerValue").value = hd;
+            document.getElementById("footerValue").value = ft;
+            document.getElementById("bgColor").value = bg;
+            document.getElementById("headerFontColor").value = hfc;
+            document.getElementById("footerFontColor").value = ffc;
+
+            document.getElementById("headerText").innerHTML = hd;
+            document.getElementById("footerText").innerHTML = ft;
+
+
+            textFit(document.getElementById('headerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
+            textFit(document.getElementById('footerText'), {multiLine: true, alignVert: true,maxFontSize: 40});
+
+            //document.getElementById("fontForm").style.display="none";
+
+            if (typeof ff != 'undefined') {
+                var ff_stripped = ff.replace(/%20/g, " ");
+            } else {
+                var ff_stripped = "Arial";
+            }
+
+
+            $("#headerText").css("font-family", ff_stripped); // Change the font-family of the #paragraph
+            $("#footerText").css("font-family", ff_stripped);
+            console.log(ff_stripped);
+
+            var rad = document.radioForm.backgroundradios;
+            var prev = null;
+            for (var i = 0; i < rad.length; i++) {
+                rad[i].addEventListener('change', function() {
+                    console.log(this.value);
+                    if (this.value == 1) {  //solidRadio
+                        document.getElementById('backgroundForm').style.display = "block";
+                        document.getElementById('imgForm').style.display = "none";
+                        var img = getUrlVars()["img"];
+                        var bg = getUrlVars()["bg"];
+                        console.log(bg);
+                        document.getElementById("preview").setAttribute("style","background: url('" + img + "');background-repeat: no-repeat;width:200px;height:600px;border:1px solid black;text-align: center; background-color: #" + bg + ";background-position: center;background-size: 0px 0px;");
+
+
+                    } else {                //imageRadio
+                        document.getElementById('backgroundForm').style.display = "none";
+                        document.getElementById('imgForm').style.display = "block";
+                        var img = getUrlVars()["img"];
+                        var bg = getUrlVars()["bg"];
+                        document.getElementById("preview").setAttribute("style","background: url('" + img + "');background-repeat: no-repeat;width:200px;height:600px;border:1px solid black;text-align: center;background-color: #" + bg + ";background-position: center;background-size: cover;");
+                    }
+                });
+            }
+
+            var bgType = getUrlVars()["bgtype"];
+
+            if (bgType == "image") {
+                $("#imageRadio").prop("checked", true);
+                $("#solidRadio").prop("checked", false);
+                document.getElementById("preview").setAttribute("style","background: url('" + img + "');background-repeat: no-repeat;width:200px;height:600px;border:1px solid black;text-align: center;background-color: #" + bg + ";background-position: center;background-size: cover;");
+                document.getElementById('backgroundForm').style.display = "none";
+                document.getElementById('imgForm').style.display = "block";
+            } else {
+                $("#imageRadio").prop("checked", false);
+                $("#solidRadio").prop("checked", true);
+                document.getElementById("preview").setAttribute("style","background: url('" + img + "');background-repeat: no-repeat;width:200px;height:600px;border:1px solid black;text-align: center; background-color: #" + bg + ";background-position: center;background-size: 0px 0px;");
+                document.getElementById('backgroundForm').style.display = "block";
+                document.getElementById('imgForm').style.display = "none";
+            };
+
+
+            return;
+
+        });
     </script>
 
 <center>
     <div style="background-color:#FFFFFF">
-        <h2 style="color:#2d4113">EMG Photostrip Maker</h1>
+        <h2 style="color:#2d4113;">EMG Photostrip Maker</h1>
                 <hr style="width:100%; border: 0;height: 3px;background-image: linear-gradient(to right, rgba(140, 199, 64, 0), rgba(140, 199, 64, 1), rgba(140, 199, 64, 0));">
     </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-4" id="instructions">
+                <h2>Instructions</h2>
+                <p class="instructions">
+                   <i>Important: To save a version of your photostrip at any point, click "Preview" and copy the URL to a safe place.</i>
+                </p>
+                <h4>Background Settings</h4>
+                <p class="instructions">
+                   Select either solid or image (can be changed later).
+                </p>
+                <h5 style="text-align: left;">Solid Backgrounds</h5>
+                <p class="instructions">
+                   <b>1.</b> Click the box next to "Background Color" and choose a color.
+                </p>
+                <h5 style="text-align: left;">Image Backgrounds</h5>
+                <p class="instructions">
+                   <b>1.</b> Type in search terms (e.g. blue ocean) in the box next to "Search a keyword" and click "View Images Below". <br>
+                   <b>2.</b> Six associated images will appear at the bottom. Click on any one to preview the image. <br>
+                   <b>3.</b> To view more pictures, click "View Images Below" again. <br>
+                </p>
+                <h4>Text Settings</h4>
+                <p class="instructions">
+                    <b>1.</b> Text inputs and color pickers are available for Header and Footer labels.<br>
+                    <b>2.</b> Fonts can be selected from the dropdown menu. <i>(Font selection will be reflected immediately, but not autospacing.)</i> <br>
+                    <b>3.</b> Click "preview" to view changes.
+                </p>
+                <h4>Ready to Send?</h4>
+                <p class="instructions">
+                    To send your photostrip to us, fill in your full name and email, add anything else you want us to know, and click send!
+                </p>
+                <p class="instructions">
 
-                <h3>Instructions</h3>
-                <p style="color:#C5C5C5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                </p>
+                <p class="instructions">
+
+                </p>
                 <br>
-                <form class="user-form" method="post" onsubmit="return getURL()">
-                    <div class="field">
-                        <label for="keyword">Search a keyword:</label>
-                        <input type="text" name="keyword" id="keyword" size="10" autofocus value="">
-                    </div>
-                    <hr>
-                    <div class="field">
-                        <input type="submit" value="View Images" name="Submit">
-                    </div>
-                </form>
-
-                <script type='text/javascript'>
-                    $('#fontList li').click(
-                        function(){
-                            var chosen = $(this).index();
-                            $('#fontSelector option:selected')
-                                .removeAttr('selected');
-                            $('#fontSelector option')
-                                .eq(chosen)
-                                .attr('selected',true);
-                            $('.selected').removeClass('selected');
-                            $(this).addClass('selected');
-                        });
-
-
-                </script>
             </div>
             <div class="col-sm-4" id="previewDiv">
                 <div id="preview" style="width:200px;height:600px;border:1px solid black;text-align: center; background-color: #000000;background-position: center;">
@@ -380,12 +483,33 @@
                 </div>
             </div>
             <div class="col-sm-4" id="googleForm">
-                <h3>Settings</h3>
-                <form class="user-form" method="post" onsubmit="return changeSettings()">
+                <h3>Background Settings</h3>
+                <form class="user-form" name="radioForm" style="padding: 0px 20px 0px 20px;">
                     <div class="field">
+                        <label for="solidRadio" style="display:inline-block; width:75%;">Solid Background:</label>
+                        <input type="radio" name="backgroundradios" id="solidRadio" style="display:inline-block; width:15%;" value="1" checked="checked">
+                    </div>
+                    <div class="field">
+                        <label for="imageRadio" style="display:inline-block; width:75%;">Image Background:</label>
+                        <input type="radio" name="backgroundradios" id="imageRadio" style="display:inline-block; width:15%;" value="2">
+                    </div>
+                </form>
+                <form id="imgForm" class="user-form" method="post" onsubmit="return getURL()" style="display:none;padding: 0px 20px 0px 20px;">
+                    <div class="field">
+                        <label for="keyword">Search a keyword:</label>
+                        <input type="text" name="keyword" id="keyword" size="10" autofocus value="">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <input type="submit" value="View Images Below" name="Submit">
+                    </div>
+                </form>
+                <form class="user-form" method="post" onsubmit="return changeSettings()" style="padding: 0px 20px 0px 20px;">
+                    <div class="field" id="backgroundForm">
                         <label for="bgColor">Background Color:</label>
                         <input name="bgColor" id="bgColor" class="jscolor" size="10" autofocus value="000000">
                     </div>
+                    <h3>Text Settings</h3>
                     <hr>
                     <div class="field">
                         <label for="headerValue">Header Text:</label>
@@ -408,46 +532,38 @@
                     </div>
                     <hr>
                     <div class="field">
+                        <label for="select_fontfamily">Font:</label>
+                        <select id="select_fontfamily" style="width: 45%;"></select>
+                    </div>
+                    <hr>
+                    <div class="field">
                         <input type="submit" value="Preview" name="Submit">
                     </div>
                 </form>
-                    <div>
-                        <form id="fontForm" action="#" method="post">
-                            <select id="fontSelector" name="fontSelector">
-                                <option value="calibri">Calibri</option>
-                                <option value="Times New Roman">Times New Roman</option>
-                                <option value="Comic Sans MS">Comic Sans MS</option>
-                            </select>
-                        </form>
+                <h3>Ready to Send?</h3>
+                <form class="user-form" style="padding: 0px 20px 0px 20px;" action="https://formspree.io/shoheietzel@gmail.com"
+                    method="POST">
+                    <input type="hidden" id="curUrl" name="curUrl" value="">
+                    <div class="field">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" id="fullName" name="fullName">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label for="e-mail">Email:</label>
+                        <input type="email" name="e-mail">
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label for="subject">Comments</label>
+                        <textarea id="subject" name="subject" placeholder="Anything Else?" style="height:100px"></textarea>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <input type="submit" value="Send">
                     </div>
 
-
-
-
-
-                    <form class="user-form" action="https://formspree.io/shoheietzel@gmail.com"
-                        method="POST">
-                        <input type="hidden" id="curUrl" name="curUrl" value="">
-                        <div class="field">
-                            <label for="fullName">Full Name:</label>
-                            <input type="text" id="fullName" name="fullName">
-                        </div>
-                        <hr>
-                        <div class="field">
-                            <label for="e-mail">Email:</label>
-                            <input type="email" name="e-mail">
-                        </div>
-                        <hr>
-                        <div class="field">
-                            <label for="subject">Comments</label>
-                            <textarea id="subject" name="subject" placeholder="Anything Else?" style="height:100px"></textarea>
-                        </div>
-                        <hr>
-                        <div class="field">
-                            <input type="submit" value="Send">
-                        </div>
-
-                    </form>
+                </form>
                     <!--
                     <div class="field">
                         <input type="submit" value="Preview" name="Submit">
